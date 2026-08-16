@@ -1,0 +1,90 @@
+import { NextResponse } from 'next/server';
+
+const SAMPLE_FIGHTERS: Record<string, any> = {
+  'jean-duc': {
+    id: '1',
+    slug: 'jean-duc',
+    display_name: 'Jean Duc',
+    first_name: 'Jean',
+    last_name: 'Duc',
+    nationality: 'FR',
+    birth_date: '1990-05-10',
+    height_cm: 180,
+    reach_cm: 185,
+    stance: 'Orthodox',
+    photo_url: '/images/fighters/jean-duc.jpg',
+    weight_category: { id: 'wc-1', name: "Welterweight", slug: 'welterweight' },
+    organizations: [{ id: 'org-ufc', name: 'UFC', slug: 'ufc' }],
+    record_wins: 18,
+    record_losses: 3,
+    record_draws: 0,
+    record_nc: 0,
+    rank: 5,
+    bio: "Combattant agressif avec un fort background en lutte.",
+    fights: [
+      {
+        id: 'f1',
+        date: '2026-05-21',
+        event_name: 'UFC 300',
+        opponent_name: 'Mark Smith',
+        method: 'KO/TKO',
+        round: 2,
+        time: '3:14',
+        result: 'win'
+      },
+      {
+        id: 'f2',
+        date: '2025-11-12',
+        event_name: 'UFC Fight Night',
+        opponent_name: 'Carlos Perez',
+        method: 'Decision',
+        round: 3,
+        time: '5:00',
+        result: 'loss'
+      }
+    ]
+  },
+
+  'maria-rosa': {
+    id: '2',
+    slug: 'maria-rosa',
+    display_name: 'María Rosa',
+    first_name: 'María',
+    last_name: 'Rosa',
+    nationality: 'ES',
+    birth_date: '1994-08-02',
+    height_cm: 165,
+    reach_cm: 168,
+    stance: 'Southpaw',
+    photo_url: '/images/fighters/maria-rosa.jpg',
+    weight_category: { id: 'wc-2', name: "Featherweight", slug: 'featherweight' },
+    organizations: [{ id: 'org-one', name: 'ONE Championship', slug: 'one' }],
+    record_wins: 12,
+    record_losses: 2,
+    record_draws: 1,
+    record_nc: 0,
+    rank: 2,
+    bio: "Technicienne au sol, excellente transition et cardio élevé.",
+    fights: [
+      {
+        id: 'f3',
+        date: '2026-03-10',
+        event_name: 'ONE Fight Night',
+        opponent_name: 'Li Na',
+        method: 'Submission',
+        round: 1,
+        time: '2:45',
+        result: 'win'
+      }
+    ]
+  }
+};
+
+export async function GET(request: Request, { params }: { params: { slug: string } }) {
+  const { slug } = params;
+  const fighter = SAMPLE_FIGHTERS[slug];
+  if (!fighter) {
+    return NextResponse.json({ error: `Fighter '${slug}' not found` }, { status: 404 });
+  }
+  return NextResponse.json(fighter);
+}
