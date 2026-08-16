@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="60" viewBox="0 0 240 60" fill="none" role="img" aria-label="MMAvex logo">
+  <rect width="240" height="60" rx="8" fill="#0B0B0B" />
+  <g transform="translate(12,10)">
+    <rect x="0" y="0" width="40" height="40" rx="8" fill="#E10600" />
+    <path d="M8 28 L16 12 L24 28 Z" fill="#0B0B0B" transform="translate(4,2)" />
+  </g>
+  <text x="68" y="38" fill="#F5F5F5" font-family="Montserrat, Inter, Arial, sans-serif" font-weight="700" font-size="26">MMAvex</text>
+</svg>
