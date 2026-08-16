@@ -1,8 +1,36 @@
-import React from 'react';
+'use client';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
+import { useRouter } from 'next/navigation';
 const SearchBar = dynamic(() => import('./SearchBar'), { ssr: false });
 
 export default function Header() {
+  const [isAdmin, setIsAdmin] = useState(false);
+  const router = useRouter();
+
+  useEffect(() => {
+    let mounted = true;
+    fetch('/api/admin/session')
+      .then((r) => r.json())
+      .then((d) => {
+        if (mounted) setIsAdmin(!!d.admin);
+      })
+      .catch(() => {
+        if (mounted) setIsAdmin(false);
+      });
+    return () => { mounted = false; };
+  }, []);
+
+  async function logout() {
+    try {
+      await fetch('/api/admin/login', { method: 'DELETE' });
+    } catch (e) {
+      // ignore
+    }
+    setIsAdmin(false);
+    router.push('/admin/login');
+  }
+
   return (
     <header className="bg-[#0B0B0B] border-b border-[#121212]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -24,6 +52,12 @@ export default function Header() {
           <div className="flex items-center gap-4">
             <div className="hidden md:block w-80">
               <SearchBar />
+            </div>
+
+            <div className="hidden md:flex items-center gap-2">
+              {isAdmin && (
+                <button onClick={logout} className="px-3 py-2 bg-[#1F1F1F] rounded text-gray-200">Déconnexion</button>
+              )}
             </div>
 
             <div className="md:hidden">
