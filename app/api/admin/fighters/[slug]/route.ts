@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import { readFile, writeFile } from 'fs/promises';
+import { verifySession } from '../../../../../lib/session';
+import { validateFighter } from '../../../../../lib/validators';
 
 const DATA_PATH = new URL('../../../../../data/fighters.json', import.meta.url);
 
@@ -15,10 +17,10 @@ function parseCookies(header?: string | null) {
 }
 
 function isAuthorized(req: Request) {
-  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'admin123';
   const cookieHeader = req.headers.get('cookie');
   const cookies = parseCookies(cookieHeader);
-  return cookies['mmavex_admin'] === ADMIN_PASSWORD;
+  const token = cookies['mmavex_session'];
+  return verifySession(token);
 }
 
 export async function PUT(req: Request, { params }: { params: { slug: string } }) {
@@ -27,6 +29,10 @@ export async function PUT(req: Request, { params }: { params: { slug: string } }
   try {
     const { slug } = params;
     const payload = await req.json();
+
+    const errors = validateFighter(payload);
+    if (errors.length > 0) return NextResponse.json({ error: 'Validation failed', details: errors }, { status: 400 });
+
     const raw = await readFile(DATA_PATH, 'utf-8');
     const data = JSON.parse(raw);
     if (!data[slug]) return NextResponse.json({ error: 'Not found' }, { status: 404 });
