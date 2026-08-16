@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 800 800" preserveAspectRatio="xMidYMid meet">
+  <rect width="100%" height="100%" fill="#0B0B0B"/>
+  <g transform="translate(80,80) scale(0.8)">
+    <rect rx="36" width="640" height="640" fill="#111111" stroke="#1F1F1F" stroke-width="4"/>
+    <ellipse cx="320" cy="210" rx="140" ry="140" fill="#1F1F1F" stroke="#222" stroke-width="3"/>
+    <rect x="220" y="390" width="200" height="14" rx="7" fill="#E10600"/>
+    <g transform="translate(110,480)">
+      <text x="0" y="0" fill="#F5F5F5" font-family="Inter, Arial, sans-serif" font-size="36" font-weight="700">María Rosa</text>
+      <text x="0" y="48" fill="#A8A8A8" font-family="Inter, Arial, sans-serif" font-size="20">Featherweight • Espagne</text>
+    </g>
+  </g>
+</svg>
