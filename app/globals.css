@@ -1,0 +1,90 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Use the font variables provided by next/font in layout.tsx */
+:root {
+  --mmavex-red: #E10600;
+  --bg-dark: #050505;
+  --surface: #0b0b0b;
+  --muted: #9aa0a6;
+}
+
+/* Base resets and font families */
+@layer base {
+  html, body {
+    @apply antialiased;
+    background-color: var(--bg-dark);
+    color: #F5F5F5;
+    font-family: var(--font-inter), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    font-weight: 400;
+    line-height: 1.45;
+  }
+
+  /* Headings: stronger visual hierarchy */
+  h1 {
+    font-family: var(--font-oswald), var(--font-inter), system-ui, sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.05;
+    font-size: 2.25rem; /* default, responsive adjustments via utilities below */
+  }
+  h2 {
+    font-family: var(--font-oswald), var(--font-inter), system-ui, sans-serif;
+    font-weight: 600;
+    font-size: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+  h3 {
+    font-weight: 600;
+    font-size: 1.125rem;
+  }
+  h4 {
+    font-weight: 600;
+    font-size: 1rem;
+  }
+
+  /* Headings responsive scale */
+  @screen sm {
+    h1 { font-size: 2.75rem; }
+    h2 { font-size: 1.75rem; }
+  }
+  @screen lg {
+    h1 { font-size: 3.5rem; }
+    h2 { font-size: 2rem; }
+  }
+
+  a {
+    color: var(--mmavex-red);
+  }
+
+  /* Improved focus for keyboard users */
+  :focus {
+    outline: 3px solid rgba(225,16,0,0.15);
+    outline-offset: 3px;
+  }
+
+  /* Cards and surfaces */
+  .card-surface {
+    background-color: var(--surface);
+    border: 1px solid #161616;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.45);
+    border-radius: 8px;
+  }
+
+  /* Small visual helpers */
+  .muted { color: var(--muted); }
+  .accent { color: var(--mmavex-red); }
+}
+
+/* Tailwind utility extensions (if needed) */
+@layer utilities {
+  .btn-accent {
+    @apply bg-[#E10600] text-black font-semibold rounded-md px-4 py-2 hover:bg-[#ff4d4d];
+  }
+  .card-hover:hover {
+    transform: translateY(-4px);
+    transition: transform .18s ease;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.55);
+  }
+}
