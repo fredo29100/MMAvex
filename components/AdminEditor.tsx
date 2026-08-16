@@ -1,5 +1,6 @@
 'use client';
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 function slugify(s: string) {
   return s
@@ -10,6 +11,7 @@ function slugify(s: string) {
 }
 
 export default function AdminEditor() {
+  const router = useRouter();
   const [fighters, setFighters] = useState<Record<string, any>>({});
   const [selected, setSelected] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -25,6 +27,15 @@ export default function AdminEditor() {
     const data = await res.json();
     setFighters(data);
     setLoading(false);
+  }
+
+  async function logout() {
+    try {
+      await fetch('/api/admin/login', { method: 'DELETE' });
+    } catch (e) {
+      // ignore
+    }
+    router.push('/admin/login');
   }
 
   function newEmpty() {
@@ -161,6 +172,7 @@ export default function AdminEditor() {
           <div className="flex gap-2">
             <button onClick={newEmpty} className="px-3 py-2 bg-[#E10600] text-black rounded font-semibold">Nouveau</button>
             <a href="/" className="px-3 py-2 bg-[#1F1F1F] rounded">Retour site</a>
+            <button onClick={logout} className="px-3 py-2 bg-[#1F1F1F] rounded">Déconnexion</button>
           </div>
         </div>
 
